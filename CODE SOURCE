@@ -1,0 +1,173 @@
+#include <iostream>
+#include <vector>
+#include <sstream>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+
+    const int PIN = 1234;
+    int enteredPin;
+
+    double balance = 50000.00;
+    int choice;
+
+    vector<string> transactions;
+
+    cout << "========== ATM SIMULATION ==========" << endl;
+
+    // PIN Authentication
+    cout << "Enter PIN: ";
+    cin >> enteredPin;
+
+    if (enteredPin != PIN) {
+        cout << "Incorrect PIN!" << endl;
+        cout << "Access Denied." << endl;
+        return 0;
+    }
+
+    cout << "\nAccess Granted!" << endl;
+
+    do {
+
+        cout << "\n========== MENU ==========" << endl;
+        cout << "1. Balance Inquiry" << endl;
+        cout << "2. Cash Withdrawal" << endl;
+        cout << "3. Cash Deposit" << endl;
+        cout << "4. Transaction Summary" << endl;
+        cout << "5. Exit" << endl;
+
+        cout << "Enter Choice: ";
+        cin >> choice;
+
+        switch (choice) {
+
+            case 1: {
+
+                cout << fixed << setprecision(2);
+
+                cout << "\nCurrent Balance: Rs. "
+                     << balance << endl;
+
+                transactions.push_back("Checked Balance");
+
+                break;
+            }
+
+            case 2: {
+
+                double amount;
+
+                cout << "Enter Withdrawal Amount: ";
+                cin >> amount;
+
+                if (amount <= 0) {
+
+                    cout << "Invalid Amount!" << endl;
+                }
+
+                else if (amount > balance) {
+
+                    cout << "Insufficient Balance!" << endl;
+                }
+
+                else {
+
+                    balance -= amount;
+
+                    cout << "Withdrawal Successful!" << endl;
+
+                    cout << "Remaining Balance: Rs. "
+                         << balance << endl;
+
+                    stringstream ss;
+
+                    ss << fixed << setprecision(2) << amount;
+
+                    transactions.push_back(
+                        "Withdrew Rs. " + ss.str()
+                    );
+                }
+
+                break;
+            }
+
+            case 3: {
+
+                double amount;
+
+                cout << "Enter Deposit Amount: ";
+                cin >> amount;
+
+                if (amount <= 0) {
+
+                    cout << "Invalid Amount!" << endl;
+                }
+
+                else {
+
+                    balance += amount;
+
+                    cout << "Deposit Successful!" << endl;
+
+                    cout << "Updated Balance: Rs. "
+                         << balance << endl;
+
+                    stringstream ss;
+
+                    ss << fixed << setprecision(2) << amount;
+
+                    transactions.push_back(
+                        "Deposited Rs. " + ss.str()
+                    );
+                }
+
+                break;
+            }
+
+            case 4: {
+
+                cout << "\n====== Transaction Summary ======"
+                     << endl;
+
+                if (transactions.empty()) {
+
+                    cout << "No Transactions Yet."
+                         << endl;
+                }
+
+                else {
+
+                    for (int i = 0;
+                         i < transactions.size();
+                         i++) {
+
+                        cout << i + 1 << ". "
+                             << transactions[i]
+                             << endl;
+                    }
+                }
+
+                break;
+            }
+
+            case 5: {
+
+                cout << "\nThank You For Using ATM!"
+                     << endl;
+
+                break;
+            }
+
+            default: {
+
+                cout << "Invalid Choice!"
+                     << endl;
+            }
+        }
+
+    } while (choice != 5);
+
+    return 0;
+}
