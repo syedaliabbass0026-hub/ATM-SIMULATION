@@ -17,26 +17,63 @@ int main() {
 
     cout << "========== ATM SIMULATION ==========" << endl;
 
-    // PIN Authentication
-    cout << "Enter PIN: ";
-    cin >> enteredPin;
+    // PIN Authentication with Retry
+    int attempts = 0;
 
-    if (enteredPin != PIN) {
-        cout << "Incorrect PIN!" << endl;
-        cout << "Access Denied." << endl;
-        return 0;
+    while (attempts < 2) {
+
+        cout << "Enter PIN: ";
+        cin >> enteredPin;
+
+        if (enteredPin == PIN) {
+
+            cout << "\nAccess Granted!" << endl;
+            break;
+        }
+
+        else {
+
+            attempts++;
+
+            if (attempts < 2) {
+
+                cout << "Incorrect PIN! Please Try Again."
+                     << endl;
+            }
+
+            else {
+
+                cout << "\nAccess Denied Permanently!"
+                     << endl;
+
+                cout << "Contact The System."
+                     << endl;
+
+                return 0;
+            }
+        }
     }
 
-    cout << "\nAccess Granted!" << endl;
-
+    // ATM Menu
     do {
 
-        cout << "\n========== MENU ==========" << endl;
-        cout << "1. Balance Inquiry" << endl;
-        cout << "2. Cash Withdrawal" << endl;
-        cout << "3. Cash Deposit" << endl;
-        cout << "4. Transaction Summary" << endl;
-        cout << "5. Exit" << endl;
+        cout << "\n========== MENU =========="
+             << endl;
+
+        cout << "1. Balance Inquiry"
+             << endl;
+
+        cout << "2. Cash Withdrawal"
+             << endl;
+
+        cout << "3. Cash Deposit"
+             << endl;
+
+        cout << "4. Transaction Summary"
+             << endl;
+
+        cout << "5. Exit"
+             << endl;
 
         cout << "Enter Choice: ";
         cin >> choice;
@@ -50,7 +87,9 @@ int main() {
                 cout << "\nCurrent Balance: Rs. "
                      << balance << endl;
 
-                transactions.push_back("Checked Balance");
+                transactions.push_back(
+                    "Checked Balance"
+                );
 
                 break;
             }
@@ -64,26 +103,31 @@ int main() {
 
                 if (amount <= 0) {
 
-                    cout << "Invalid Amount!" << endl;
+                    cout << "Invalid Amount!"
+                         << endl;
                 }
 
                 else if (amount > balance) {
 
-                    cout << "Insufficient Balance!" << endl;
+                    cout << "Insufficient Balance!"
+                         << endl;
                 }
 
                 else {
 
                     balance -= amount;
 
-                    cout << "Withdrawal Successful!" << endl;
+                    cout << "Withdrawal Successful!"
+                         << endl;
 
                     cout << "Remaining Balance: Rs. "
                          << balance << endl;
 
                     stringstream ss;
 
-                    ss << fixed << setprecision(2) << amount;
+                    ss << fixed
+                       << setprecision(2)
+                       << amount;
 
                     transactions.push_back(
                         "Withdrew Rs. " + ss.str()
@@ -102,21 +146,25 @@ int main() {
 
                 if (amount <= 0) {
 
-                    cout << "Invalid Amount!" << endl;
+                    cout << "Invalid Amount!"
+                         << endl;
                 }
 
                 else {
 
                     balance += amount;
 
-                    cout << "Deposit Successful!" << endl;
+                    cout << "Deposit Successful!"
+                         << endl;
 
                     cout << "Updated Balance: Rs. "
                          << balance << endl;
 
                     stringstream ss;
 
-                    ss << fixed << setprecision(2) << amount;
+                    ss << fixed
+                       << setprecision(2)
+                       << amount;
 
                     transactions.push_back(
                         "Deposited Rs. " + ss.str()
